@@ -64,6 +64,11 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         'allowedIPs' => ['*'],
+        'on beforeAction' => function ($event) {
+            if (Yii::$app->user->isGuest || !Yii::$app->user->identity->isAdmin()) {
+                throw new \yii\web\ForbiddenHttpException('Nur für Admins.');
+            }
+        },
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];

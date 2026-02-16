@@ -3,13 +3,56 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
 
+    public $password;
+
     public static function tableName()
     {
         return 'User'; // Name deiner Tabelle in der DB
+    }
+
+    public function rules()
+    {
+        return [
+            [['username', 'password'], 'required', 'on' => 'signup'],
+            ['username', 'unique', 'message' => 'Dieser Name ist leider schon vergeben.'],
+            ['username', 'string', 'min' => 3, 'max' => 255],
+            ['password', 'string', 'min' => 6],
+        ];
+    }
+
+    public function signup()
+    {
+        if ($this->validate()) {
+            $this->password_hash = $this->password;
+            // Falls du kein auth_key in der DB hast, kannst du diese Zeile weglassen:
+            // $this->auth_key = Yii::$app->security->generateRandomString();
+
+            return $this->save(false);
+        }
+        return false;
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $now = date('Y-m-d H:i:s');
+
+            if ($insert) {
+                // Wird nur beim ersten Erstellen gesetzt
+                $this->created_at = $now;
+            }
+            // Wird bei jedem Speichern aktualisiert
+            $this->updated_at = $now;
+
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -18,6 +61,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function findIdentity($id)
     {
         return static::findOne($id);
+    }
+
+    public function isAdmin()
+    {
+        // Prüft, ob der String in der Spalte 'role' exakt 'admin' ist
+        return $this->role === 'admin';
     }
 
     /**
