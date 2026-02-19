@@ -31,7 +31,7 @@ CREATE TABLE Homework (
     due_date Date,
     is_done BOOLEAN,
     userId int,
-    subejctId int,
+    subjectId int,
     created_at Date,
     updated_at Date
 );
