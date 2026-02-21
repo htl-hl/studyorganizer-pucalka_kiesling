@@ -23,7 +23,7 @@ $this->title = 'My Yii Application';
         $this->title = 'Dashboard';
         ?>
         <div class="site-index">
-            
+
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead class="table-primary">
