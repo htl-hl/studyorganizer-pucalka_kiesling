@@ -1,18 +1,12 @@
-    <?php
+<?php
 
 /** @var yii\web\View $this */
 
 $this->title = 'My Yii Application';
+
+use yii\helpers\Html;
 ?>
 <div class="site-index">
-
-    <div class="jumbotron text-center bg-transparent mt-5 mb-5">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
 
     <div class="body-content">
 
@@ -21,26 +15,82 @@ $this->title = 'My Yii Application';
         /** @var yii\web\View $this */
 
         $this->title = 'Dashboard';
+
+        use yii\grid\GridView;
         ?>
         <div class="site-index">
+            <div class="body-content">
+                <p>
+                    <?= Html::a('Neue Hausaufgabe speichern', ['homework/create'], ['class' => 'btn btn-primary']) ?>
+                </p>
+                <div class="table-responsive" style="padding: 2cm">
 
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <thead class="table-primary">
-                    <tr>
-                        <th>Title</th>
-                        <th>Fach</th>
-                        <th>Lehrer</th>
-                        <th>Fälligkeitsdatum</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td colspan="5" class="text-center">Keine Daten vorhanden</td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <?= GridView::widget([
+                            'dataProvider' => new \yii\data\ActiveDataProvider([
+                                'query' => \app\models\Homework::find(),
+                                'pagination' => ['pageSize' => 10],
+                            ]),
+
+                            'tableOptions' => ['class' => 'table table-striped table-bordered'],
+                            'rowOptions' => function ($model, $key, $index, $grid) {
+                                return [
+                                        'style' => 'cursor: pointer',
+                                        'onclick' => 'location.href="' . \yii\helpers\Url::to(['homework/view', 'homeworkId' => $model->homeworkId]) . '"',
+                                ];
+                            },
+                            'headerRowOptions' => ['class' => 'table-primary'],
+                            'summary' => '',
+                            'emptyText' => 'Keine Daten vorhanden',
+                            'columns' => [
+                                    'title',
+                                    [
+                                            'attribute' => 'subject_id',
+                                            'label' => 'Fach',
+                                            'value' => function ($model) {
+                                                return $model->subject ? $model->subject->name : 'Kein Fach';
+                                            },
+                                    ],
+                                    [
+                                            'label' => 'Lehrer',
+                                            'value' => function ($model) {
+                                                if ($model->subject && $model->subject->teacher) {
+                                                    return $model->subject->teacher->name;
+                                                }
+                                                return 'no input';
+                                            },
+                                    ],
+                                    'is_done:boolean',
+                                    [
+                                            'attribute' => 'due_date',
+                                            'label' => 'Fälligkeitsdatum',
+                                            'format' => ['date', 'php:d.m.Y'],
+                                            'contentOptions' => function ($model) {
+                                                if (!$model->due_date) {
+                                                    return [];
+                                                }
+
+                                                $heute = new DateTime('today');
+                                                $ziel = new DateTime($model->due_date);
+                                                $differenz = $heute->diff($ziel);
+                                                $tageBisDahin = (int)$differenz->format("%r%a");
+
+                                                if ($tageBisDahin < 1) {
+                                                    return ['style' => 'background-color: #f8d7da; color: #721c24; font-weight: bold;'];
+                                                }
+                                                elseif ($tageBisDahin < 7) {
+                                                    return ['style' => 'background-color: #fff3cd; color: #856404; font-weight: bold;'];
+                                                }
+                                                elseif ($tageBisDahin <= 14) {
+                                                    return ['style' => 'background-color: #d1ecf1; color: #0c5460;'];
+                                                }
+
+                                                return [];
+                                            },
+                                    ]
+                            ],
+                    ]); ?>
+
+                </div>
             </div>
         </div>
 
