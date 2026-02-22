@@ -1,17 +1,18 @@
 <?php
 
-namespace app\models;
+namespace app\controllers;
 
-use app\models\Subject;
-use app\models\SubjectSearch;
+use app\models\Teacher;
+use app\models\TeacherSearch;
+use app\models\Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
- * SubjectController implements the CRUD actions for Subject model.
+ * TeacherController implements the CRUD actions for Teacher model.
  */
-class SubjectController extends Controller
+class TeacherController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +33,13 @@ class SubjectController extends Controller
     }
 
     /**
-     * Lists all Subject models.
+     * Lists all Teacher models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new SubjectSearch();
+        $searchModel = new TeacherSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,30 +49,30 @@ class SubjectController extends Controller
     }
 
     /**
-     * Displays a single Subject model.
-     * @param int $subjectId Subject ID
+     * Displays a single Teacher model.
+     * @param int $teacherId Teacher ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($subjectId)
+    public function actionView($teacherId)
     {
         return $this->render('view', [
-            'model' => $this->findModel($subjectId),
+            'model' => $this->findModel($teacherId),
         ]);
     }
 
     /**
-     * Creates a new Subject model.
+     * Creates a new Teacher model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Subject();
+        $model = new Teacher();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'subjectId' => $model->subjectId]);
+                return $this->redirect(['view', 'teacherId' => $model->teacherId]);
             }
         } else {
             $model->loadDefaultValues();
@@ -83,18 +84,18 @@ class SubjectController extends Controller
     }
 
     /**
-     * Updates an existing Subject model.
+     * Updates an existing Teacher model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $subjectId Subject ID
+     * @param int $teacherId Teacher ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($subjectId)
+    public function actionUpdate($teacherId)
     {
-        $model = $this->findModel($subjectId);
+        $model = $this->findModel($teacherId);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'subjectId' => $model->subjectId]);
+            return $this->redirect(['view', 'teacherId' => $model->teacherId]);
         }
 
         return $this->render('update', [
@@ -103,29 +104,29 @@ class SubjectController extends Controller
     }
 
     /**
-     * Deletes an existing Subject model.
+     * Deletes an existing Teacher model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $subjectId Subject ID
+     * @param int $teacherId Teacher ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($subjectId)
+    public function actionDelete($teacherId)
     {
-        $this->findModel($subjectId)->delete();
+        $this->findModel($teacherId)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Subject model based on its primary key value.
+     * Finds the Teacher model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $subjectId Subject ID
-     * @return Subject the loaded model
+     * @param int $teacherId Teacher ID
+     * @return Teacher the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($subjectId)
+    protected function findModel($teacherId)
     {
-        if (($model = Subject::findOne(['subjectId' => $subjectId])) !== null) {
+        if (($model = Teacher::findOne(['teacherId' => $teacherId])) !== null) {
             return $model;
         }
 

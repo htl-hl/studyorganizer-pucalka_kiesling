@@ -1,17 +1,18 @@
 <?php
 
-namespace app\models;
+namespace app\controllers;
 
-use app\models\Homework;
-use app\models\HomeworkSearch;
+use app\models\Subject;
+use app\models\SubjectSearch;
+use app\models\Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
- * HomeworkController implements the CRUD actions for Homework model.
+ * SubjectController implements the CRUD actions for Subject model.
  */
-class HomeworkController extends Controller
+class SubjectController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +33,13 @@ class HomeworkController extends Controller
     }
 
     /**
-     * Lists all Homework models.
+     * Lists all Subject models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new HomeworkSearch();
+        $searchModel = new SubjectSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,30 +49,30 @@ class HomeworkController extends Controller
     }
 
     /**
-     * Displays a single Homework model.
-     * @param int $homeworkId Homework ID
+     * Displays a single Subject model.
+     * @param int $subjectId Subject ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($homeworkId)
+    public function actionView($subjectId)
     {
         return $this->render('view', [
-            'model' => $this->findModel($homeworkId),
+            'model' => $this->findModel($subjectId),
         ]);
     }
 
     /**
-     * Creates a new Homework model.
+     * Creates a new Subject model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Homework();
+        $model = new Subject();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'homeworkId' => $model->homeworkId]);
+                return $this->redirect(['view', 'subjectId' => $model->subjectId]);
             }
         } else {
             $model->loadDefaultValues();
@@ -83,18 +84,18 @@ class HomeworkController extends Controller
     }
 
     /**
-     * Updates an existing Homework model.
+     * Updates an existing Subject model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $homeworkId Homework ID
+     * @param int $subjectId Subject ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($homeworkId)
+    public function actionUpdate($subjectId)
     {
-        $model = $this->findModel($homeworkId);
+        $model = $this->findModel($subjectId);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'homeworkId' => $model->homeworkId]);
+            return $this->redirect(['view', 'subjectId' => $model->subjectId]);
         }
 
         return $this->render('update', [
@@ -103,29 +104,29 @@ class HomeworkController extends Controller
     }
 
     /**
-     * Deletes an existing Homework model.
+     * Deletes an existing Subject model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $homeworkId Homework ID
+     * @param int $subjectId Subject ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($homeworkId)
+    public function actionDelete($subjectId)
     {
-        $this->findModel($homeworkId)->delete();
+        $this->findModel($subjectId)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Homework model based on its primary key value.
+     * Finds the Subject model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $homeworkId Homework ID
-     * @return Homework the loaded model
+     * @param int $subjectId Subject ID
+     * @return Subject the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($homeworkId)
+    protected function findModel($subjectId)
     {
-        if (($model = Homework::findOne(['homeworkId' => $homeworkId])) !== null) {
+        if (($model = Subject::findOne(['subjectId' => $subjectId])) !== null) {
             return $model;
         }
 

@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Subject;
 
 /** @var yii\web\View $this */
 /** @var app\models\Homework $model */
@@ -16,17 +18,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'due_date')->textInput() ?>
+    <?= $form->field($model, 'due_date')->input('date') ?>
 
-    <?= $form->field($model, 'is_done')->textInput() ?>
+    <?= $form->field($model, 'is_done')->checkbox() ?>
 
-    <?= $form->field($model, 'userId')->textInput() ?>
-
-    <?= $form->field($model, 'subejctId')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?= $form->field($model, 'subjectId')->dropDownList(
+    // Wir holen alle Fächer und mappen 'id' auf 'name'
+            ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
+            [
+                    'prompt' => 'Bitte ein Fach auswählen...', // Platzhalter
+                    'class' => 'form-control' // Bootstrap-Klasse
+            ]
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

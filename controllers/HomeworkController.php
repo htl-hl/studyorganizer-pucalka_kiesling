@@ -1,17 +1,17 @@
 <?php
 
-namespace app\models;
+namespace app\controllers;
 
-use app\models\Teacher;
-use app\models\TeacherSearch;
+use app\models\Homework;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
- * TeacherController implements the CRUD actions for Teacher model.
+ * HomeworkController implements the CRUD actions for Homework model.
  */
-class TeacherController extends Controller
+class HomeworkController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,49 +32,53 @@ class TeacherController extends Controller
     }
 
     /**
-     * Lists all Teacher models.
+     * Lists all Homework models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new TeacherSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => \app\models\Homework::find(),
+            'pagination' => ['pageSize' => 10],
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Teacher model.
-     * @param int $teacherId Teacher ID
+     * Displays a single Homework model.
+     * @param int $homeworkId Homework ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($teacherId)
+    public function actionView($homeworkId)
     {
         return $this->render('view', [
-            'model' => $this->findModel($teacherId),
+            'model' => $this->findModel($homeworkId),
         ]);
     }
 
     /**
-     * Creates a new Teacher model.
+     * Creates a new Homework model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Teacher();
+        $model = new Homework();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'teacherId' => $model->teacherId]);
+            if ($model->load($this->request->post())) {
+
+                $model->userId = Yii::$app->user->id;
+
+                if ($model->save()) {
+                    return $this->redirect(['/']);
+                }
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -83,18 +87,18 @@ class TeacherController extends Controller
     }
 
     /**
-     * Updates an existing Teacher model.
+     * Updates an existing Homework model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $teacherId Teacher ID
+     * @param int $homeworkId Homework ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($teacherId)
+    public function actionUpdate($homeworkId)
     {
-        $model = $this->findModel($teacherId);
+        $model = $this->findModel($homeworkId);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'teacherId' => $model->teacherId]);
+            return $this->redirect(['view', 'homeworkId' => $model->homeworkId]);
         }
 
         return $this->render('update', [
@@ -103,29 +107,29 @@ class TeacherController extends Controller
     }
 
     /**
-     * Deletes an existing Teacher model.
+     * Deletes an existing Homework model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $teacherId Teacher ID
+     * @param int $homeworkId Homework ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($teacherId)
+    public function actionDelete($homeworkId)
     {
-        $this->findModel($teacherId)->delete();
+        $this->findModel($homeworkId)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/']);
     }
 
     /**
-     * Finds the Teacher model based on its primary key value.
+     * Finds the Homework model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $teacherId Teacher ID
-     * @return Teacher the loaded model
+     * @param int $homeworkId Homework ID
+     * @return Homework the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($teacherId)
+    protected function findModel($homeworkId)
     {
-        if (($model = Teacher::findOne(['teacherId' => $teacherId])) !== null) {
+        if (($model = Homework::findOne(['homeworkId' => $homeworkId])) !== null) {
             return $model;
         }
 

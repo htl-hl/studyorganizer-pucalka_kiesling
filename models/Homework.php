@@ -13,7 +13,7 @@ use Yii;
  * @property string|null $due_date
  * @property int|null $is_done
  * @property int|null $userId
- * @property int|null $subejctId
+ * @property int|null $subjectId
  * @property string|null $created_at
  * @property string|null $updated_at
  */
@@ -35,10 +35,10 @@ class Homework extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'due_date', 'is_done', 'userId', 'subejctId', 'created_at', 'updated_at'], 'default', 'value' => null],
+            [['title', 'description', 'due_date', 'is_done', 'userId', 'subjectId', 'created_at', 'updated_at'], 'default', 'value' => null],
             [['description'], 'string'],
             [['due_date', 'created_at', 'updated_at'], 'safe'],
-            [['is_done', 'userId', 'subejctId'], 'integer'],
+            [['is_done', 'userId', 'subjectId'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
     }
@@ -55,10 +55,34 @@ class Homework extends \yii\db\ActiveRecord
             'due_date' => Yii::t('app', 'Due Date'),
             'is_done' => Yii::t('app', 'Is Done'),
             'userId' => Yii::t('app', 'User ID'),
-            'subejctId' => Yii::t('app', 'Subejct ID'),
+            'subjectId' => Yii::t('app', 'Subject'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
+    }
+
+    public function getSubject()
+    {
+        return $this->hasOne(Subject::class, ['subjectId' => 'subjectId']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if (!empty($this->due_date)) {
+                if (is_numeric($this->due_date)) {
+                    $timestamp = (int)$this->due_date;
+                } else {
+                    $timestamp = strtotime($this->due_date);
+                }
+
+                if ($timestamp) {
+                    $this->due_date = date('Y-m-d', $timestamp);
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
