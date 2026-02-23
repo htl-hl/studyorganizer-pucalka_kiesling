@@ -35,7 +35,7 @@ class Homework extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'due_date', 'is_done', 'userId', 'subjectId', 'created_at', 'updated_at'], 'default', 'value' => null],
+            [['title', 'subjectId'], 'required'],
             [['description'], 'string'],
             [['due_date', 'created_at', 'updated_at'], 'safe'],
             [['is_done', 'userId', 'subjectId'], 'integer'],
@@ -83,6 +83,11 @@ class Homework extends \yii\db\ActiveRecord
             return true;
         }
         return false;
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['userId' => 'userId']);
     }
 
     /**

@@ -17,11 +17,24 @@ use yii\helpers\Html;
         $this->title = 'Dashboard';
 
         use yii\grid\GridView;
+        use yii\bootstrap5\ButtonDropdown;
         ?>
         <div class="site-index">
             <div class="body-content">
                 <p>
-                    <?= Html::a('Neue Hausaufgabe speichern', ['homework/create'], ['class' => 'btn btn-primary']) ?>
+                    <?php
+                    echo ButtonDropdown::widget([
+                            'label' => 'Hinzufügen',
+                            'dropdown' => [
+                                    'items' => [
+                                            ['label' => 'Aufgabe', 'url' => 'homework/create'],
+                                            ['label' => 'Subject', 'url' => 'subject/create'],
+                                            ['label' => 'Teacher', 'url' => 'teacher/create'],
+                                    ],
+                            ],
+                            'options' => ['class' => 'btn btn-primary'],
+                    ]);
+                    ?>
                 </p>
                 <div class="table-responsive" style="padding: 2cm">
 
