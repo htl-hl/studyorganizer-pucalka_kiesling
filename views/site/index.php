@@ -23,7 +23,7 @@ use yii\helpers\Html;
             <div class="body-content">
                 <p>
                     <?php
-                    if (Yii::$app->user->can('admin')) {
+                    if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()) {
                         echo ButtonDropdown::widget([
                                 'label' => 'Hinzufügen',
                                 'dropdown' => [
@@ -35,6 +35,12 @@ use yii\helpers\Html;
                                 ],
                                 'options' => ['class' => 'btn btn-primary'],
                         ]);
+                    } elseif (!Yii::$app->user->isGuest) {
+                        echo Html::a('Aufgabe speichern', ['homework/create'], [
+                                'class' => 'btn btn-primary'
+                        ]);
+                    } else {
+                        
                     }
                     ?>
                 </p>
