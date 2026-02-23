@@ -23,17 +23,25 @@ use yii\helpers\Html;
             <div class="body-content">
                 <p>
                     <?php
-                    echo ButtonDropdown::widget([
-                            'label' => 'Hinzufügen',
-                            'dropdown' => [
-                                    'items' => [
-                                            ['label' => 'Aufgabe', 'url' => 'homework/create'],
-                                            ['label' => 'Subject', 'url' => 'subject/create'],
-                                            ['label' => 'Teacher', 'url' => 'teacher/create'],
-                                    ],
-                            ],
-                            'options' => ['class' => 'btn btn-primary'],
-                    ]);
+                    if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()) {
+                        echo ButtonDropdown::widget([
+                                'label' => 'Hinzufügen',
+                                'dropdown' => [
+                                        'items' => [
+                                                ['label' => 'Aufgabe', 'url' => ['homework/create']],
+                                                ['label' => 'Subject', 'url' => ['subject/create']],
+                                                ['label' => 'Teacher', 'url' => ['teacher/create']],
+                                        ],
+                                ],
+                                'options' => ['class' => 'btn btn-primary'],
+                        ]);
+                    } elseif (!Yii::$app->user->isGuest) {
+                        echo Html::a('Aufgabe speichern', ['homework/create'], [
+                                'class' => 'btn btn-primary'
+                        ]);
+                    } else {
+                        
+                    }
                     ?>
                 </p>
                 <div class="table-responsive" style="padding: 2cm">
