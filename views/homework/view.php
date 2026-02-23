@@ -32,7 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'homeworkId',
             'title',
             'description:ntext',
-            'due_date',
+                [
+                        'attribute' => 'userId',
+                        'label' => 'Erstellt von',
+                        'value' => function ($model) {
+                            return $model->user ? $model->user->username : '(Nicht gesetzt)';
+                        },
+                ],
             'is_done:boolean',
             'userId',
             'subjectId',

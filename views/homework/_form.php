@@ -24,7 +24,7 @@ use app\models\Subject;
 
     <?= $form->field($model, 'subjectId')->dropDownList(
     // Wir holen alle Fächer und mappen 'id' auf 'name'
-            ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
+            ArrayHelper::map(Subject::find()->all(), 'subjectId', 'name'),
             [
                     'prompt' => 'Bitte ein Fach auswählen...', // Platzhalter
                     'class' => 'form-control' // Bootstrap-Klasse
