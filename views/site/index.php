@@ -40,7 +40,23 @@ use yii\helpers\Html;
                                 'class' => 'btn btn-primary'
                         ]);
                     } else {
-                        
+
+                    }
+                    ?>
+
+                    <?php
+                    if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()) {
+                        echo ButtonDropdown::widget([
+                                'label' => 'Bearbeiten',
+                                'dropdown' => [
+                                        'items' => [
+                                                ['label' => 'Aufgabe', 'url' => ['homework/index']],
+                                                ['label' => 'Subject', 'url' => ['subject/index']],
+                                                ['label' => 'Teacher', 'url' => ['teacher/index']],
+                                        ],
+                                ],
+                                'options' => ['class' => 'btn btn-primary'],
+                        ]);
                     }
                     ?>
                 </p>
@@ -48,7 +64,16 @@ use yii\helpers\Html;
 
                     <?= GridView::widget([
                             'dataProvider' => new \yii\data\ActiveDataProvider([
-                                'query' => \app\models\Homework::find(),
+                                'query' => (function() {
+                                    $query = \app\models\Homework::find();
+                                    $userId = Yii::$app->user->id;
+
+                                    if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin()) {
+                                        $query->andWhere(['userId' => $userId]);
+                                    }
+
+                                    return $query;
+                                })(),
                                 'pagination' => ['pageSize' => 10],
                             ]),
 

@@ -40,8 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                 ],
             'is_done:boolean',
-            'userId',
-            'subjectId',
+                [
+                        'attribute' => 'subjectId',
+                        'label' => 'Subject',
+                        'value' => function ($model) {
+                            return $model->subject ? $model->subject->name : '(nicht gesetzt)';
+                        },
+                ],
             'created_at',
             'updated_at',
         ],

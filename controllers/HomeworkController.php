@@ -75,6 +75,8 @@ class HomeworkController extends Controller
 
                 $model->userId = Yii::$app->user->id;
 
+                $model->created_at = date("y-m-d");
+
                 if ($model->save()) {
                     return $this->redirect(['/']);
                 }
@@ -97,8 +99,17 @@ class HomeworkController extends Controller
     {
         $model = $this->findModel($homeworkId);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'homeworkId' => $model->homeworkId]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+
+                $model->userId = Yii::$app->user->id;
+
+                $model->updated_at = date("y-m-d");
+
+                if ($model->save()) {
+                    return $this->redirect(['/']);
+                }
+            }
         }
 
         return $this->render('update', [

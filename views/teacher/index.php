@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'teacherId',
             'name',
-            'is_active',
+            'is_active:boolean',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Teacher $model, $key, $index, $column) {
