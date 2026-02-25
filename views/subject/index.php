@@ -31,7 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'subjectId',
             'name',
-            'teacherId',
+                [
+                        'attribute' => 'subjectId',
+                        'label' => 'Teacher',
+                        'value' => function ($model) {
+                            return $model->teacher ? $model->teacher->name : '(nicht gesetzt)';
+                        },
+                ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Subject $model, $key, $index, $column) {

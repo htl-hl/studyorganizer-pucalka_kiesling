@@ -31,7 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'subjectId',
             'name',
-            'teacherId',
+                [
+                        'attribute' => 'teacherId',
+                        'label' => 'Teacher',
+                        'value' => function ($model) {
+                            return $model->teacher->name;
+                        },
+                ],
         ],
     ]) ?>
 

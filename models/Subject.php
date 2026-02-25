@@ -46,7 +46,7 @@ class Subject extends \yii\db\ActiveRecord
         return [
             'subjectId' => Yii::t('app', 'Subject ID'),
             'name' => Yii::t('app', 'Name'),
-            'teacherId' => Yii::t('app', 'Teacher ID'),
+            'teacherId' => Yii::t('app', 'Teacher'),
         ];
     }
 
