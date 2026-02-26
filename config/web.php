@@ -26,6 +26,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['site/login'], // Zur Login-Seite weiterleiten
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -46,15 +47,27 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
+    ],
+
+    // ACCESS CONTROL für ALLE Seiten
+    'as access' => [
+        'class' => 'yii\filters\AccessControl',
+        'rules' => [
+            [
+                'allow' => true,
+                'actions' => ['login', 'signup', 'error'], // HIER signup hinzugefügt
+                'roles' => ['?'],
+            ],
+            [
+                'allow' => true,
+                'roles' => ['@'],
             ],
         ],
-        */
+        'denyCallback' => function($rule, $action) {
+            return Yii::$app->response->redirect(['site/login']);
+        },
     ],
+
     'params' => $params,
 ];
 
@@ -69,16 +82,12 @@ if (YII_ENV_DEV) {
                 throw new \yii\web\ForbiddenHttpException('Nur für Admins.');
             }
         },
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         'allowedIPs' => ['*'],
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
 
