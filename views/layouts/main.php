@@ -36,7 +36,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <header id="header">
     <?php
     NavBar::begin([
-        'brandLabel' => '<img src="' . Yii::getAlias('@web') . '/bigLogo.png" alt="Logo" style="height:37px; width:auto; margin-left:-20px">',
+        'brandLabel' => '<img src="' . Yii::getAlias('@web') . '/bigLogo.png" alt="Logo" style="height:40px; width:auto; margin-left:-20px">',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
