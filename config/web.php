@@ -34,6 +34,13 @@ $config = [
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@app/mail',
+            'transport' => [
+                'scheme' => 'smtp',
+                'host' => 'localhost',
+                'username' => '',
+                'password' => '',
+                'port' => '1025'
+            ],
             // send all mails to a file by default.
             'useFileTransport' => true,
         ],
