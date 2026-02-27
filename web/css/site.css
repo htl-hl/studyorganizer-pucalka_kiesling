@@ -81,6 +81,7 @@ main > .container {
     padding: 8px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     animation: dropdownFade 0.15s ease;
+    color: white;
 }
 
 .dropdown-item {
@@ -117,30 +118,33 @@ main > .container {
 /* LOGOUT BUTTON */
 /* ===================================================== */
 
-button.logout {
-    background: #f1f5f9;
-    border: none;
+.navbar .logout {
+    background: #f1f5f9 !important;
     border-radius: 999px;
+    border: none;
     padding: 6px 14px;
-    font-weight: 500;
     color: #334155 !important;
-    transition: all 0.25s ease;
+    transition: all .25s ease;
 }
 
-button.logout::before {
+/* Emoji */
+.navbar .logout::before {
     content: "👤 ";
 }
 
-button.logout:hover {
-    background: #2563eb;
-    color: white !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+/* HOVER FIX */
+.navbar .logout:hover,
+.navbar .logout:focus,
+.navbar .nav-link.logout:hover {
+    background: #2563eb !important;
+    color: #ffffff !important;
 }
 
-button.logout:active {
-    transform: scale(0.96);
+/* verhindert Bootstrap Überschreibung */
+.navbar li > form > button.logout:hover {
+    color: #ffffff !important;
 }
+
 
 
 /* ===================================================== */
