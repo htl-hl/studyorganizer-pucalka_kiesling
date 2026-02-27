@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
             'due_date',
-            'is_done',
+            'is_done:boolean',
             //'userId',
             //'subejctId',
             //'created_at',
