@@ -48,6 +48,21 @@ class HomeworkController extends Controller
         ]);
     }
 
+    public function actionFinish($id)
+    {
+        $model = $this->findModel($id);
+
+        $model->is_done = 1;
+
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', 'Task finished!');
+        } else {
+            Yii::$app->session->setFlash('error', 'Error saving task.');
+        }
+
+        return $this->redirect(['/']);
+    }
+
     /**
      * Displays a single Homework model.
      * @param int $homeworkId Homework ID

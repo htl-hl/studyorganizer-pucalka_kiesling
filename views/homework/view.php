@@ -24,6 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a(Yii::t('app', 'Finish'), ['finish', 'id' => $model->homeworkId], [
+                'class' => 'btn btn-success',
+                'data' => [
+                        'confirm' => Yii::t('app', 'Are you sure you want to finish this task?'),
+                        'method' => 'post',
+                ],
+        ]) ?>
     </p>
 
     <?= DetailView::widget([
