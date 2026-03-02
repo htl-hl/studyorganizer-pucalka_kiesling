@@ -29,14 +29,14 @@ use yii\helpers\Html;
                                 'dropdown' => [
                                         'items' => [
                                                 ['label' => 'Aufgabe', 'url' => ['homework/create']],
-                                                ['label' => 'Subject', 'url' => ['subject/create']],
-                                                ['label' => 'Teacher', 'url' => ['teacher/create']],
+                                                ['label' => 'Fach', 'url' => ['subject/create']],
+                                                ['label' => 'Lehrer', 'url' => ['teacher/create']],
                                         ],
                                 ],
                                 'options' => ['class' => 'btn btn-primary'],
                         ]);
                     } elseif (!Yii::$app->user->isGuest) {
-                        echo Html::a('Aufgabe speichern', ['homework/create'], [
+                        echo Html::a('Aufgabe hinzufügen', ['homework/create'], [
                                 'class' => 'btn btn-primary'
                         ]);
                     } else {
@@ -51,8 +51,8 @@ use yii\helpers\Html;
                                 'dropdown' => [
                                         'items' => [
                                                 ['label' => 'Aufgabe', 'url' => ['homework/index']],
-                                                ['label' => 'Subject', 'url' => ['subject/index']],
-                                                ['label' => 'Teacher', 'url' => ['teacher/index']],
+                                                ['label' => 'Fach', 'url' => ['subject/index']],
+                                                ['label' => 'Lehrer', 'url' => ['teacher/index']],
                                         ],
                                 ],
                                 'options' => ['class' => 'btn btn-primary'],

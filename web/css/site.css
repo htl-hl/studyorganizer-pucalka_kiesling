@@ -46,34 +46,34 @@ main > .container {
 
 
 /* ===================================================== */
-/* BUTTONS */
+/* BUTTONS & DROPDOWNS */
 /* ===================================================== */
 
 .btn {
     border-radius: 12px;
     padding: 8px 18px;
     font-weight: 500;
-    letter-spacing: 0.3px;
     transition: all 0.25s ease;
 }
 
-.btn-primary {
+.btn-primary,
+.homework-index .btn-success,
+.subject-index .btn-success,
+.teacher-index .btn-success {
     background: linear-gradient(135deg, #2563eb, #4f46e5);
     border: none;
     color: white;
     box-shadow: 0 4px 10px rgba(37,99,235,0.3);
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.homework-index .btn-success:hover,
+.subject-index .btn-success:hover,
+.teacher-index .btn-success:hover {
     transform: translateY(-2px);
     filter: brightness(1.05);
     box-shadow: 0 8px 18px rgba(37,99,235,0.4);
 }
-
-
-/* ===================================================== */
-/* MODERN DROPDOWN */
-/* ===================================================== */
 
 .dropdown-menu {
     border: none;
@@ -81,7 +81,6 @@ main > .container {
     padding: 8px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     animation: dropdownFade 0.15s ease;
-    color: white;
 }
 
 .dropdown-item {
@@ -95,11 +94,6 @@ main > .container {
 .dropdown-item:hover {
     background: #eef2ff;
     color: #2563eb;
-}
-
-.dropdown-item:active {
-    background: #2563eb;
-    color: white;
 }
 
 @keyframes dropdownFade {
@@ -127,24 +121,15 @@ main > .container {
     transition: all .25s ease;
 }
 
-/* Emoji */
 .navbar .logout::before {
     content: "👤 ";
 }
 
-/* HOVER FIX */
 .navbar .logout:hover,
-.navbar .logout:focus,
-.navbar .nav-link.logout:hover {
+.navbar .logout:focus {
     background: #2563eb !important;
     color: #ffffff !important;
 }
-
-/* verhindert Bootstrap Überschreibung */
-.navbar li > form > button.logout:hover {
-    color: #ffffff !important;
-}
-
 
 
 /* ===================================================== */
@@ -160,7 +145,7 @@ main > .container {
 
 
 /* ===================================================== */
-/* GRIDVIEW TABLE */
+/* TABELLEN - BASIS */
 /* ===================================================== */
 
 .table {
@@ -169,17 +154,13 @@ main > .container {
     background: white;
 }
 
-.table thead {
-    background: linear-gradient(90deg, #3b82f6, #6366f1);
-    color: white;
+.table thead,
+.table-primary thead,
+.table-primary thead th {
+    background: linear-gradient(90deg, #3b82f6, #6366f1) !important;
+    color: white !important;
 }
 
-.table-primary th {
-    background: transparent !important;
-    border: none;
-}
-
-/* FIX SORT LINKS */
 .table thead th,
 .table thead th a {
     color: white !important;
@@ -191,7 +172,6 @@ main > .container {
     color: #e0e7ff !important;
 }
 
-/* SORT ICONS */
 .table thead a.asc:after,
 .table thead a.desc:after {
     content: '';
@@ -210,7 +190,6 @@ main > .container {
     border-top: solid 7px #ffffff;
 }
 
-/* ROW STYLE */
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: #f8fafc;
 }
@@ -223,6 +202,36 @@ main > .container {
     background: #eef2ff;
     transform: scale(1.005);
     box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+/* Bootstrap Primary überschreiben */
+.table-primary {
+    --bs-table-color: white !important;
+    --bs-table-bg: transparent !important;
+    --bs-table-border-color: transparent !important;
+}
+
+
+/* ===================================================== */
+/* UNTERSEITEN SPEZIFISCH */
+/* ===================================================== */
+
+.homework-index h1,
+.subject-index h1,
+.teacher-index h1 {
+    font-weight: 600;
+    color: #1e293b;
+    border-left: 4px solid #2563eb;
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+
+/* SerialColumn */
+.homework-index .grid-view tbody td:first-child,
+.subject-index .grid-view tbody td:first-child,
+.teacher-index .grid-view tbody td:first-child {
+    font-weight: 600;
+    color: #4b5563;
 }
 
 
@@ -256,7 +265,7 @@ main > .container {
 
 
 /* ===================================================== */
-/* DEFAULT YII CLEANUP */
+/* YII DEFAULTS */
 /* ===================================================== */
 
 .not-set {
@@ -269,9 +278,8 @@ main > .container {
 }
 
 .hint-block {
-    display: block;
-    margin-top: 5px;
     color: #999;
+    margin-top: 5px;
 }
 
 .error-summary {
@@ -292,19 +300,14 @@ main > .container {
 /* ===================================================== */
 
 @media (max-width: 768px) {
-
     .body-content {
         padding: 15px;
-    }
-
-    .table-responsive {
-        padding: 0 !important;
     }
 }
 
 
 /* ===================================================== */
-/* SMALL PREMIUM DETAILS */
+/* PREMIUM DETAILS */
 /* ===================================================== */
 
 h1, h2, h3 {
@@ -318,4 +321,36 @@ h1, h2, h3 {
 .grid-view {
     border-radius: 12px;
     overflow: hidden;
+}
+/* Erzwingt blauen Header in ALLEN GridViews */
+table.grid-view thead,
+table.grid-view thead tr,
+table.grid-view thead th,
+.table thead,
+.table thead tr,
+.table thead th,
+.table-primary thead,
+.table-primary thead tr,
+.table-primary thead th,
+.homework-index table thead,
+.subject-index table thead,
+.teacher-index table thead,
+.homework-index .grid-view thead,
+.subject-index .grid-view thead,
+.teacher-index .grid-view thead {
+    background: linear-gradient(90deg, #3b82f6, #6366f1) !important;
+    color: white !important;
+}
+
+/* Speziell für Zellen */
+table.grid-view thead th a,
+.table thead th a,
+.table-primary thead th a {
+    color: white !important;
+}
+
+/* Bootstrap-Kram killen */
+.table-primary {
+    --bs-table-bg: transparent !important;
+    --bs-table-color: white !important;
 }
