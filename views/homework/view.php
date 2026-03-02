@@ -17,14 +17,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'homeworkId' => $model->homeworkId], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'homeworkId' => $model->homeworkId], [
+        <?= Html::a(Yii::t('app', 'Löschen'), ['delete', 'homeworkId' => $model->homeworkId], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a(Yii::t('app', 'Finish'), ['finish', 'id' => $model->homeworkId], [
+        <?= Html::a(Yii::t('app', 'Erledigt'), ['finish', 'id' => $model->homeworkId], [
                 'class' => 'btn btn-success',
                 'data' => [
                         'confirm' => Yii::t('app', 'Are you sure you want to finish this task?'),
@@ -46,10 +46,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->user ? $model->user->username : '(Nicht gesetzt)';
                         },
                 ],
-            'is_done:boolean',
+                [
+                        'attribute' => 'is_done',
+                        'label' => 'Erledigt',
+                        'format' => 'boolean',
+                ],
                 [
                         'attribute' => 'subjectId',
-                        'label' => 'Subject',
+                        'label' => 'Fach',
                         'value' => function ($model) {
                             return $model->subject ? $model->subject->name : '(nicht gesetzt)';
                         },
