@@ -49,15 +49,15 @@ class Homework extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'homeworkId' => Yii::t('app', 'Homework ID'),
-            'title' => Yii::t('app', 'Title'),
-            'description' => Yii::t('app', 'Description'),
-            'due_date' => Yii::t('app', 'Due Date'),
-            'is_done' => Yii::t('app', 'Is Done'),
+            'homeworkId' => Yii::t('app', 'Aufgaben ID'),
+            'title' => Yii::t('app', 'Titel'),
+            'description' => Yii::t('app', 'Beschreibung'),
+            'due_date' => Yii::t('app', 'Abgabedatum'),
+            'is_done' => Yii::t('app', 'Erledigt'),
             'userId' => Yii::t('app', 'User ID'),
             'subjectId' => Yii::t('app', 'Subject'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'created_at' => Yii::t('app', 'Erstellt am'),
+            'updated_at' => Yii::t('app', 'Geändert am'),
         ];
     }
 
