@@ -20,7 +20,6 @@ use yii\helpers\Html;
         use yii\bootstrap5\ButtonDropdown;
         ?>
         <div class="site-index">
-            <div class="body-content">
                 <p>
                     <?php
                     if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()) {
@@ -137,7 +136,6 @@ use yii\helpers\Html;
                     ]); ?>
 
                 </div>
-            </div>
         </div>
 
     </div>
