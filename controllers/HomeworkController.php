@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Homework;
+use app\models\HomeworkSearch;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -38,13 +39,12 @@ class HomeworkController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new \yii\data\ActiveDataProvider([
-            'query' => \app\models\Homework::find(),
-            'pagination' => ['pageSize' => 10],
-        ]);
+        $searchModel = new HomeworkSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 

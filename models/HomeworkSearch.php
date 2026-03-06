@@ -17,7 +17,7 @@ class HomeworkSearch extends Homework
     public function rules()
     {
         return [
-            [['homeworkId', 'is_done', 'userId', 'subejctId'], 'integer'],
+            [['homeworkId', 'is_done', 'userId', 'subjectId'], 'integer'],
             [['title', 'description', 'due_date', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -63,7 +63,7 @@ class HomeworkSearch extends Homework
             'due_date' => $this->due_date,
             'is_done' => $this->is_done,
             'userId' => $this->userId,
-            'subejctId' => $this->subejctId,
+            'subjectId' => $this->subjectId,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

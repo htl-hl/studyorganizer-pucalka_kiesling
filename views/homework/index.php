@@ -25,12 +25,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'homeworkId',
             'title',
-            'description:ntext',
+                [
+                        'attribute' => 'description',
+                        'format' => 'ntext',
+                        'value' => function ($model) {
+                            return mb_strimwidth($model->description, 0, 40, "...");
+                        },
+                ],
             'due_date',
             'is_done:boolean',
             //'userId',
