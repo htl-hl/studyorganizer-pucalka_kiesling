@@ -10,7 +10,6 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login conatiner">
     <div class="row justify-content-center">
