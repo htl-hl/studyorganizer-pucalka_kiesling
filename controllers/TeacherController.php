@@ -4,10 +4,10 @@ namespace app\controllers;
 
 use app\models\Teacher;
 use app\models\TeacherSearch;
-use app\models\Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use Yii;
 
 /**
  * TeacherController implements the CRUD actions for Teacher model.
@@ -26,6 +26,18 @@ class TeacherController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => \yii\filters\AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'update'],
+                            'allow' => true,
+                            'matchCallback' => function ($rule, $action) {
+                                return !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin();
+                            }
+                        ],
                     ],
                 ],
             ]
