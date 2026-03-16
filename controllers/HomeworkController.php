@@ -54,6 +54,8 @@ class HomeworkController extends Controller
 
         $model->is_done = 1;
 
+        $model->updated_at = date("y-m-d");
+
         if ($model->save()) {
             Yii::$app->session->setFlash('success', 'Task finished!');
         } else {

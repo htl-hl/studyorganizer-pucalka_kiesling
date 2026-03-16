@@ -78,10 +78,16 @@ use yii\helpers\Html;
 
                             'tableOptions' => ['class' => 'table table-striped table-bordered'],
                             'rowOptions' => function ($model, $key, $index, $grid) {
-                                return [
+                                $options = [
                                         'style' => 'cursor: pointer',
                                         'onclick' => 'location.href="' . \yii\helpers\Url::to(['homework/view', 'homeworkId' => $model->homeworkId]) . '"',
                                 ];
+
+                                if ($model->is_done) {
+                                    $options['style'] .= '; opacity: 0.5; background-color: #f8f9fa; color: #6c757d;';
+                                }
+
+                                return $options;
                             },
                             'headerRowOptions' => ['class' => 'table-primary'],
                             'summary' => '',
@@ -108,8 +114,25 @@ use yii\helpers\Html;
                                     [
                                             'attribute' => 'due_date',
                                             'label' => 'Fälligkeitsdatum',
-                                            'format' => ['date', 'php:d.m.Y'],
+                                        // Wir entfernen das globale 'format' => ['date', ...],
+                                        // da wir den Rückgabewert nun manuell im 'value' steuern.
+                                            'value' => function ($model) {
+                                                if ($model->is_done) {
+                                                    return 'Abgegeben';
+                                                }
+                                                if (!$model->due_date) {
+                                                    return 'Kein Datum';
+                                                }
+                                                // Manuelle Formatierung des Datums, falls nicht erledigt
+                                                return Yii::$app->formatter->asDate($model->due_date, 'php:d.m.Y');
+                                            },
                                             'contentOptions' => function ($model) {
+                                                // Wenn erledigt, überschreiben wir die farbige Logik
+                                                // (optional, damit "Abgegeben" nicht rot hinterlegt ist)
+                                                if ($model->is_done) {
+                                                    return ['style' => 'font-style: italic; color: #6c757d;'];
+                                                }
+
                                                 if (!$model->due_date) {
                                                     return [];
                                                 }
