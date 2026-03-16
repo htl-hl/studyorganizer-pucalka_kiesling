@@ -66,7 +66,6 @@ main > .container {
     box-shadow: 0 4px 10px rgba(37,99,235,0.3);
 }
 
-.btn-primary:hover,
 .homework-index .btn-success:hover,
 .subject-index .btn-success:hover,
 .teacher-index .btn-success:hover {
@@ -350,15 +349,19 @@ table.grid-view thead th a,
     }
 }
 
-/* Dropdown Items */
+/* Dropdown Items - GEFIXT */
 .dropdown-item {
     padding: 12px 22px;
     color: #2c3e50;
     font-size: 1rem;
     font-weight: 500;
-    transition: all 0.2s ease;
-    /* NEU: Keine eigenen Rundungen */
+    transition: background-color 0.2s ease, color 0.2s ease;  /* KEIN transform */
     border-radius: 0;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(90deg, #eef2ff, #ffffff);
+    color: #2563eb;
 }
 
 /* Erster und letzter Item bekommen Rundungen nur oben/unten */
@@ -370,12 +373,6 @@ table.grid-view thead th a,
 .dropdown-item:last-child {
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
-}
-
-.dropdown-item:hover {
-    background: linear-gradient(90deg, #eef2ff, #ffffff);
-    color: #2563eb;
-    padding-left: 27px;
 }
 
 /* Dropdown Toggle Pfeil */
