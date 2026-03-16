@@ -8,6 +8,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 
 /**
  * HomeworkController implements the CRUD actions for Homework model.
@@ -26,6 +27,18 @@ class HomeworkController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index'],
+                            'allow' => true,
+                            'matchCallback' => function ($rule, $action) {
+                                return !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin();
+                            }
+                        ],
                     ],
                 ],
             ]
@@ -54,7 +67,7 @@ class HomeworkController extends Controller
 
         $model->is_done = 1;
 
-        $model->updated_at = date("y-m-d");
+        $model->created_at = date("y-m-d");
 
         if ($model->save()) {
             Yii::$app->session->setFlash('success', 'Task finished!');

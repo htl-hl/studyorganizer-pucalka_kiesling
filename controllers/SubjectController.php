@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use app\models\Subject;
 use app\models\SubjectSearch;
-use app\models\Yii;
+use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -26,6 +26,18 @@ class SubjectController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => \yii\filters\AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'update'],
+                            'allow' => true,
+                            'matchCallback' => function ($rule, $action) {
+                                return !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin();
+                            }
+                        ],
                     ],
                 ],
             ]
