@@ -46,7 +46,7 @@ main > .container {
 
 
 /* ===================================================== */
-/* BUTTONS & DROPDOWNS */
+/* BUTTONS */
 /* ===================================================== */
 
 .btn {
@@ -73,38 +73,6 @@ main > .container {
     transform: translateY(-2px);
     filter: brightness(1.05);
     box-shadow: 0 8px 18px rgba(37,99,235,0.4);
-}
-
-.dropdown-menu {
-    border: none;
-    border-radius: 12px;
-    padding: 8px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    animation: dropdownFade 0.15s ease;
-}
-
-.dropdown-item {
-    border-radius: 8px;
-    padding: 8px 12px;
-    color: #334155;
-    font-weight: 500;
-    transition: all 0.15s ease;
-}
-
-.dropdown-item:hover {
-    background: #eef2ff;
-    color: #2563eb;
-}
-
-@keyframes dropdownFade {
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 
@@ -322,6 +290,7 @@ h1, h2, h3 {
     border-radius: 12px;
     overflow: hidden;
 }
+
 /* Erzwingt blauen Header in ALLEN GridViews */
 table.grid-view thead,
 table.grid-view thead tr,
@@ -353,4 +322,83 @@ table.grid-view thead th a,
 .table-primary {
     --bs-table-bg: transparent !important;
     --bs-table-color: white !important;
+}
+
+/* ===================================================== */
+/* EINFACHES & TOLLES DROPDOWN - MIT FIXED ECKEN */
+/* ===================================================== */
+
+/* Dropdown Menu */
+.dropdown-menu {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 8px 0;
+    margin-top: 5px !important;
+    animation: fadeIn 0.2s ease;
+    background: white;
+    min-width: 200px;
+    overflow: hidden;  /* NEU: Verhindert dass Hover über die Ecken ragt */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Dropdown Items */
+.dropdown-item {
+    padding: 12px 22px;
+    color: #2c3e50;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    /* NEU: Keine eigenen Rundungen */
+    border-radius: 0;
+}
+
+/* Erster und letzter Item bekommen Rundungen nur oben/unten */
+.dropdown-item:first-child {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.dropdown-item:last-child {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(90deg, #eef2ff, #ffffff);
+    color: #2563eb;
+    padding-left: 27px;
+}
+
+/* Dropdown Toggle Pfeil */
+.dropdown-toggle::after {
+    transition: transform 0.2s ease;
+}
+
+.dropdown.show .dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+/* Trennlinie */
+.dropdown-divider {
+    margin: 6px 0;
+    border-top: 1px solid #e9ecef;
+}
+
+/* Dropdown Header */
+.dropdown-header {
+    color: #6c757d;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px 22px;
+    font-weight: 600;
 }
