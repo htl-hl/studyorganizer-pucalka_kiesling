@@ -13,7 +13,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function tableName()
     {
-        return 'User'; // Name deiner Tabelle in der DB
+        return 'User';
     }
 
     public function rules()
@@ -30,8 +30,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         if ($this->validate()) {
             $this->password_hash = $this->password;
-            // Falls du kein auth_key in der DB hast, kannst du diese Zeile weglassen:
-            // $this->auth_key = Yii::$app->security->generateRandomString();
 
             return $this->save(false);
         }
@@ -44,10 +42,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             $now = date('Y-m-d H:i:s');
 
             if ($insert) {
-                // Wird nur beim ersten Erstellen gesetzt
                 $this->created_at = $now;
             }
-            // Wird bei jedem Speichern aktualisiert
             $this->updated_at = $now;
 
             return true;
@@ -55,9 +51,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return false;
     }
 
-    /**
-     * Findet einen User anhand der ID
-     */
     public static function findIdentity($id)
     {
         return static::findOne($id);
@@ -65,21 +58,13 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function isAdmin()
     {
-        // Prüft, ob der String in der Spalte 'role' exakt 'admin' ist
         return $this->role === 'admin';
     }
-
-    /**
-     * Findet einen User anhand des Access Tokens (z.B. für APIs)
-     */
     public static function findIdentityByAccessToken($token, $type = null)
     {
         return static::findOne(['access_token' => $token]);
     }
 
-    /**
-     * Findet einen User anhand des Namens (wichtig für den Login)
-     */
     public static function findByUsername($username)
     {
         return static::findOne(['username' => $username]);
@@ -100,9 +85,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return null;
     }
 
-    /**
-     * Passwort-Validierung (Sicherheits-Check)
-     */
     public function validatePassword($password)
     {
         // Nutzt Yii's eingebauten Sicherheits-Helper (vergleicht Hash mit Klartext)
