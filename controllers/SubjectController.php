@@ -28,18 +28,6 @@ class SubjectController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
-                'access' => [
-                    'class' => \yii\filters\AccessControl::class,
-                    'rules' => [
-                        [
-                            'actions' => ['index', 'create', 'update'],
-                            'allow' => true,
-                            'matchCallback' => function ($rule, $action) {
-                                return !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin();
-                            }
-                        ],
-                    ],
-                ],
             ]
         );
     }
