@@ -29,18 +29,6 @@ class HomeworkController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
-                'access' => [
-                    'class' => AccessControl::class,
-                    'rules' => [
-                        [
-                            'actions' => ['index'],
-                            'allow' => true,
-                            'matchCallback' => function ($rule, $action) {
-                                return !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin();
-                            }
-                        ],
-                    ],
-                ],
             ]
         );
     }
